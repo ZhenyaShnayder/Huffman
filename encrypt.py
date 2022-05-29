@@ -29,7 +29,7 @@ while(len(str2)>1):
     str2 = sorted(str2, key=lambda x: x.freq)# сортировка списка объектов по атрибуту: freq, создается lambda-функции, которая вернет freq объекта
     val1=str2[0]
     val2=str2[1]
-    val=Uzel(-1,val1.freq+val2.freq,str2[0],str2[1])#присваиваем None-фиктивная вершина
+    val=Uzel(-1, val1.freq+val2.freq, str2[0], str2[1])#присваиваем None-фиктивная вершина
     str2[0]=val
     str2.pop(1)
 #5.рекурсивный обход дерева и создание словаря
@@ -50,7 +50,6 @@ f2=open("C:\\Users\\днс\\OneDrive\\Рабочий стол\\encr.txt", "wb")
 for i in range(256):
     if(frequencies[i]!=0):
         f2.write(chr(i).encode("ascii"))
-        f2.write(chr(1).encode("ascii"))
         f2.write(str(frequencies[i]).encode("ascii"))
         f2.write(chr(2).encode("ascii"))
 f2.write(chr(3).encode("ascii"))
