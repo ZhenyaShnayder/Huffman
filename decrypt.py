@@ -63,10 +63,30 @@ while sym!='':
     i+=1
     if str1 in dictionary:#если нашли в словаре, то записываем в файл
         f1.write(dictionary[str1])
-        print(str1)
+        # print(str1)
         str1 = ''
     if i==8:
         sym = f.read(1).decode("ascii")  # считка символа
         i=1
 f1.close()
 f.close()
+#СРАВНЕНИЕ ФАЙЛА ИСХОДНОГО С ДЕКОДИРУЕМЫМ
+f1 = open("C:\\Users\\днс\\OneDrive\\Рабочий стол\\new.txt", "r")
+f2 = open("C:\\Users\\днс\\OneDrive\\Рабочий стол\\decr.txt", "r")
+sym1 = f1.read(1)
+sym2 = f2.read(1)
+while sym1!='':
+    if sym1!=sym2:
+        print("Файлы были разные ")
+        f1.close()
+        f2.close()
+        continue
+    sym1 = f1.read(1)
+    sym2 = f2.read(1)
+if sym2!='':
+    print("Файлы были разные ")
+else:
+    print("Файлы были одинаковые ")
+# закрытие файлов
+f1.close()
+f2.close()
