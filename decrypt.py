@@ -28,7 +28,6 @@ while sym!=chr(3):
     accum2 = int(accum2)
     str2.append(Uzel(accum1, accum2, None, None))
     accum2 = ''
-
 #3.сортировка списка узлов по частотам и построение дерева
 #на место 0-го узла-новый добавляем в список, второй удаляем из списка
 while(len(str2)>1):
@@ -38,6 +37,36 @@ while(len(str2)>1):
     val=Uzel(-1, val1.freq+val2.freq, str2[0], str2[1])#присваиваем None-фиктивная вершина
     str2[0]=val
     str2.pop(1)
-#4.основной цикл раскодирования
-
+#4.рекурсивный обход дерева и создание словаря
+dictionary={}#позволит хранить пары "ключ-значение", то есть будем хранить символы использованные в файле и в соответствие их кодировку в "0" и "1"
+def Tree_traversal(str2, node):
+    # str2=''#строка для хранения значений
+    if (node.left is not None):
+        Tree_traversal(str2+'0', node.left)
+    if (node.right is not None):
+        Tree_traversal(str2+'1', node.right)
+    if (node.left is None and node.right is None):
+        dictionary[str2]=node.sym
+le=''
+Tree_traversal(le, str2[0])
+print(dictionary)
+#5.основной цикл раскодирования
+#открываем второй файл для записи в него значений
+f1=open("C:\\Users\\днс\\OneDrive\\Рабочий стол\\decr.txt", "w")
+sym = f.read(1).decode("ascii")  # считка символа
+i=1
+co=0
+str1=''
+while sym!='':
+    ti=''.join(format(ord(sym), '08b'))#чтоб в двоичной просмотреть
+    str1 += ti[i]
+    i+=1
+    if str1 in dictionary:#если нашли в словаре, то записываем в файл
+        f1.write(dictionary[str1])
+        print(str1)
+        str1 = ''
+    if i==8:
+        sym = f.read(1).decode("ascii")  # считка символа
+        i=1
+f1.close()
 f.close()
