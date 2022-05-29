@@ -3,28 +3,26 @@
 frequencies=[0 for i in range (256)]
 f=open("C:\\Users\\днс\\OneDrive\\Рабочий стол\\new.txt", "r")
 sym=f.read(1)
-frequencies[ord(sym)] +=1
 while sym!='':
     frequencies[ord(sym)] +=1
     sym=f.read(1)
-f.close()
+f.seek(0)
 # 2.класс Uzel
 class Uzel:
     #конструктор
-    def __init__(self,ascii_code, freq, left, right):
+    def __init__(self,sym, freq, left, right):
         self.freq=freq
-        self.ascii_code=ascii_code
+        self.sym=sym
         self.left=left
         self.right=right
     def __repr__(self):
-        return f"freq={self.freq}, ascii_code={self.ascii_code}, left={self.left}, right={self.right};"
+        return f"freq={self.freq}, sym={self.sym}, left={self.left}, right={self.right};"
 #3.список узлов
 str2=[]
-str3 = str2.copy()
 for i in range (256):
     if frequencies[i]!=0:
         #создание узла
-        str2.append(Uzel(i, frequencies[i], None, None))
+        str2.append(Uzel(chr(i), frequencies[i], None, None))
 #4.сортировка списка узлов по частотам и построение дерева
 #на место 0-го узла-новый добавляем в список, второй удаляем из списка
 while(len(str2)>1):
@@ -42,14 +40,43 @@ def Tree_traversal(str2, node):
         Tree_traversal(str2+'0', node.left)
     if (node.right is not None):
         Tree_traversal(str2+'1', node.right)
-    print(str2)
     if (node.left is None and node.right is None):
-        dictionary[chr(node.ascii_code)]=str2
-    print(dictionary)
+        dictionary[node.sym]=str2
+    # print(dictionary)
 le=''
 Tree_traversal(le, str2[0])
-# print(dictionary)
-
+#6.запись в файл 2 зашифрованное
+f2=open("C:\\Users\\днс\\OneDrive\\Рабочий стол\\encr.txt", "wb")
+for i in range(256):
+    if(frequencies[i]!=0):
+        f2.write(chr(i).encode("ascii"))
+        f2.write(chr(1).encode("ascii"))
+        f2.write(str(frequencies[i]).encode("ascii"))
+        f2.write(chr(2).encode("ascii"))
+f2.write(chr(3).encode("ascii"))
+sym = f.read(1)
+# f2.write(chr().encode("ascii"))
+i=0
+j=0
+accum=0
+while sym != '':
+    #code=sym.encode("ascii")
+    code=dictionary[sym]
+    accum=accum<<1
+    i+=1
+    if code[j]=='1':
+        accum=accum|1
+    j+=1
+    if j==len(code):
+        j=0
+        sym=f.read(1)
+    if i==7:
+        f2.write(chr(accum).encode("ascii"))
+        accum=0
+        i=0
+    print(sym)
+f.close()
+f2.close()
 
 
 
