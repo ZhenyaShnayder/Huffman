@@ -23,6 +23,7 @@ for i in range (256):
     if frequencies[i]!=0:
         #создание узла
         str2.append(Uzel(chr(i), frequencies[i], None, None))
+# str3=str2.copy()
 #4.сортировка списка узлов по частотам и построение дерева
 #на место 0-го узла-новый добавляем в список, второй удаляем из списка
 while(len(str2)>1):
@@ -41,12 +42,21 @@ def Tree_traversal(str2, node):
     if (node.right is not None):
         Tree_traversal(str2+'1', node.right)
     if (node.left is None and node.right is None):
-        dictionary[node.sym]=str2
-    # print(dictionary)
+        dictionary[node.sym] = str2
 le=''
 Tree_traversal(le, str2[0])
+print(dictionary)
+
+# k=0
+# for i in range (0,len(dictionary)):
+#     l=str3[i]
+#     k=len(dictionary[l.sym])*l.freq+k
+# k=k%7
+# print(k)
+
 #6.запись в файл 2 зашифрованное
 f2=open("C:\\Users\\днс\\OneDrive\\Рабочий стол\\encr.txt", "wb")
+f2.write(chr(4).encode('ascii'))
 for i in range(256):
     if(frequencies[i]!=0):
         f2.write(chr(i).encode("ascii"))
@@ -54,12 +64,10 @@ for i in range(256):
         f2.write(chr(2).encode("ascii"))
 f2.write(chr(3).encode("ascii"))
 sym = f.read(1)
-# f2.write(chr().encode("ascii"))
 i=0
 j=0
 accum=0
 while sym != '':
-    #code=sym.encode("ascii")
     code=dictionary[sym]
     accum=accum<<1
     i+=1
@@ -73,19 +81,9 @@ while sym != '':
         f2.write(chr(accum).encode("ascii"))
         accum=0
         i=0
-    print(sym)
+accum=accum<<7-i
+f2.write(chr(accum).encode("ascii"))
+f2.seek(0)
+f2.write(chr(7-i).encode('ascii'))
 f.close()
 f2.close()
-
-
-
-
-
-
-
-
-
-#f.write(chr(13).encode("ascii"))
-# f.write(chr(10).encode("ascii"))
-# f=open("C:\\Users\\днс\\OneDrive\\Рабочий стол\\new.txt", "r")
-# sym=f.read(1)
