@@ -11,6 +11,8 @@ class Uzel:
 
 #2.считка частот из файла и создание узлов
 f=open("C:\\Users\\днс\\OneDrive\\Рабочий стол\\encr.txt", "rb")
+fic=sym = f.read(1).decode("ascii")  #считка фиктивных нулей
+# print(ord(fic))
 accum2=''#записываем частоту
 str2=[]
 accum1=''#записываем символ
@@ -25,8 +27,7 @@ while sym!=chr(3):
         accum2=accum2+sym
         sym=f.read(1).decode("ascii")
     #print(accum1, accum2)
-    accum2 = int(accum2)
-    str2.append(Uzel(accum1, accum2, None, None))
+    str2.append(Uzel(accum1, int(accum2), None, None))
     accum2 = ''
 #3.сортировка списка узлов по частотам и построение дерева
 #на место 0-го узла-новый добавляем в список, второй удаляем из списка
@@ -54,20 +55,37 @@ print(dictionary)
 #открываем второй файл для записи в него значений
 f1=open("C:\\Users\\днс\\OneDrive\\Рабочий стол\\decr.txt", "w")
 sym = f.read(1).decode("ascii")  # считка символа
+print(len(sym))
 i=1
-co=0
 str1=''
-while sym!='':
+while len(sym)!= 0:
     ti=''.join(format(ord(sym), '08b'))#чтоб в двоичной просмотреть
     str1 += ti[i]
     i+=1
     if str1 in dictionary:#если нашли в словаре, то записываем в файл
         f1.write(dictionary[str1])
-        # print(str1)
         str1 = ''
     if i==8:
+        i = 1
         sym = f.read(1).decode("ascii")  # считка символа
-        i=1
+        print(len(sym))
+        if len(sym)==0:
+            break
+        if len(f.read(1).decode("ascii")) == 0:#до этого считали последний сивол
+            print("=")
+            ti = ''.join(format(ord(sym), '08b'))  # чтоб в двоичной просмотреть
+            # if ord(fic)==0:
+            #     break
+            while i<8-ord(fic):
+                str1 += ti[i]
+                i+=1
+                print(str1)
+                if str1 in dictionary:  # если нашли в словаре, то записываем в файл
+                    f1.write(dictionary[str1])
+                    str1 = ''
+            break
+        f.seek(-1, 1)
+
 f1.close()
 f.close()
 #СРАВНЕНИЕ ФАЙЛА ИСХОДНОГО С ДЕКОДИРУЕМЫМ
@@ -77,10 +95,10 @@ sym1 = f1.read(1)
 sym2 = f2.read(1)
 while sym1!='':
     if sym1!=sym2:
-        print("Файлы были разные ")
+        print("Файлы были разные. ")
         f1.close()
         f2.close()
-        continue
+        exit ()
     sym1 = f1.read(1)
     sym2 = f2.read(1)
 if sym2!='':
