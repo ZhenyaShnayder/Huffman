@@ -10,7 +10,13 @@ class Uzel:
         return f"freq={self.freq}, sym={self.sym}, left={self.left}, right={self.right};"
 
 #2.считка частот из файла и создание узлов
-f=open("C:\\Users\\днс\\OneDrive\\Рабочий стол\\encr.txt", "rb")
+t=input("Введите путь к файлу ")
+try:
+    f=open(t, "rb")
+except:
+    print("Неправильно был указан путь файла ")
+    exit()
+# f=open("C:\\Users\\днс\\OneDrive\\Рабочий стол\\encr.txt", "rb")
 fic=sym = f.read(1).decode("ascii")  #считка фиктивных нулей
 # print(ord(fic))
 accum2=''#записываем частоту
@@ -53,7 +59,13 @@ Tree_traversal(le, str2[0])
 print(dictionary)
 #5.основной цикл раскодирования
 #открываем второй файл для записи в него значений
-f1=open("C:\\Users\\днс\\OneDrive\\Рабочий стол\\decr.txt", "w")
+t=input("Введите путь к файлу ")
+try:
+    f1=open(t, "w")
+except:
+    print("Неправильно был указан путь файла ")
+    exit()
+# f1=open("C:\\Users\\днс\\OneDrive\\Рабочий стол\\decr.txt", "w")
 sym = f.read(1).decode("ascii")  # считка символа
 print(len(sym))
 i=1
@@ -72,7 +84,6 @@ while len(sym)!= 0:
         if len(sym)==0:
             break
         if len(f.read(1).decode("ascii")) == 0:#до этого считали последний сивол
-            print("=")
             ti = ''.join(format(ord(sym), '08b'))  # чтоб в двоичной просмотреть
             # if ord(fic)==0:
             #     break
@@ -89,8 +100,20 @@ while len(sym)!= 0:
 f1.close()
 f.close()
 #СРАВНЕНИЕ ФАЙЛА ИСХОДНОГО С ДЕКОДИРУЕМЫМ
-f1 = open("C:\\Users\\днс\\OneDrive\\Рабочий стол\\new.txt", "r")
-f2 = open("C:\\Users\\днс\\OneDrive\\Рабочий стол\\decr.txt", "r")
+t=input("Введите путь к файлу ")
+try:
+    f1=open(t, "r")
+except:
+    print("Неправильно был указан путь файла ")
+    exit()
+# f1 = open("C:\\Users\\днс\\OneDrive\\Рабочий стол\\new.txt", "r")
+t=input("Введите путь к файлу ")
+try:
+    f2=open(t, "r")
+except:
+    print("Неправильно был указан путь файла ")
+    exit()
+# f2 = open("C:\\Users\\днс\\OneDrive\\Рабочий стол\\decr.txt", "r")
 sym1 = f1.read(1)
 sym2 = f2.read(1)
 while sym1!='':
