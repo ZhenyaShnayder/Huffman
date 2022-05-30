@@ -23,7 +23,7 @@ for i in range (256):
     if frequencies[i]!=0:
         #создание узла
         str2.append(Uzel(chr(i), frequencies[i], None, None))
-# str3=str2.copy()
+str3=str2.copy()
 #4.сортировка списка узлов по частотам и построение дерева
 #на место 0-го узла-новый добавляем в список, второй удаляем из списка
 while(len(str2)>1):
@@ -47,12 +47,12 @@ le=''
 Tree_traversal(le, str2[0])
 print(dictionary)
 
-# k=0
-# for i in range (0,len(dictionary)):
-#     l=str3[i]
-#     k=len(dictionary[l.sym])*l.freq+k
-# k=k%7
-# print(k)
+#узнаем сколько байт задействовано
+d=0
+for i in range (0,len(dictionary)):
+    l=str3[i]
+    d=l.freq+d
+print("Сколько байт задействовано было бы без нашей кодировки: ",d)
 
 #6.запись в файл 2 зашифрованное
 f2=open("C:\\Users\\днс\\OneDrive\\Рабочий стол\\encr.txt", "wb")
@@ -66,6 +66,7 @@ f2.write(chr(3).encode("ascii"))
 sym = f.read(1)
 i=0
 j=0
+k=0
 accum=0
 while sym != '':
     code=dictionary[sym]
@@ -81,6 +82,8 @@ while sym != '':
         f2.write(chr(accum).encode("ascii"))
         accum=0
         i=0
+        k+=1
+print("Сколько байт было задействовано:", k+1)
 accum=accum<<7-i
 f2.write(chr(accum).encode("ascii"))
 f2.seek(0)
