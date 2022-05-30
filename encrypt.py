@@ -1,7 +1,12 @@
+t=input("Введите путь к файлу ")
 # 1.подсчет частот
 # создание псевдо-ассоциативного массива
 frequencies=[0 for i in range (256)]
-f=open("C:\\Users\\днс\\OneDrive\\Рабочий стол\\new.txt", "r")
+try:
+    f=open(t, "r")
+except:
+    print("Неправильно был указан путь файла ")
+    exit()
 sym=f.read(1)
 while sym!='':
     frequencies[ord(sym)] +=1
@@ -55,7 +60,13 @@ for i in range (0,len(dictionary)):
 print("Сколько байт задействовано было бы без нашей кодировки: ",d)
 
 #6.запись в файл 2 зашифрованное
-f2=open("C:\\Users\\днс\\OneDrive\\Рабочий стол\\encr.txt", "wb")
+t=input("Введите путь к файлу ")
+try:
+    f2=open(t, "wb")
+except:
+    print("Неправильно был указан путь файла ")
+    exit()
+# f2=open("C:\\Users\\днс\\OneDrive\\Рабочий стол\\encr.txt", "wb")
 f2.write(chr(4).encode('ascii'))
 for i in range(256):
     if(frequencies[i]!=0):
